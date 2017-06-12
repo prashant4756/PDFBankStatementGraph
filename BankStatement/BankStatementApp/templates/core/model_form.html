@@ -1,0 +1,18 @@
+<html>
+	<title>form</title>
+	<body>
+
+	<div align='center'>
+	  	<form method="post" enctype="multipart/form-data" action={% url 'model_form_upload' %}>
+	    	{% csrf_token %}
+	    	{{ form.as_p }}
+	    	{# <input type="file" name="myfile"> #}
+		    <button type="submit">Upload</button>
+	  	</form>
+	  </div>
+
+	</body>
+</html>
+
+
+

@@ -1,0 +1,30 @@
+<html>
+	<title>home</title>
+	<head>
+		{% load static %}
+		<script type="text/javascript" src="{% static 'BankStatementApp/myscript.js' %}"></script>
+	</head>
+	<body>
+		Home page
+	{% block content %}
+	<a href="/BankStatementApp/mylink">Model Form Upload</a>
+	  
+
+	  <p>Uploaded files:</p>
+	  <ul>
+	    {% for obj in documents %}
+	      <li>
+	        <a href="{{ obj.document.url }}">{{ obj.document.name }}</a>
+	        <small>(Uploaded at: {{ obj.uploaded_at }} {{ obj.id }})</small>
+	        <p>{{ obj.description }}</p>
+	        <form method="post" action={% url 'for_dashboard' %}>
+		    	{% csrf_token %}
+		    	<input type="hidden" value="{{ obj.id }}" name="doc_obj_id" />
+		    <button type="submit">See Dashboard</button>
+	  	</form>
+	      </li>
+	    {% endfor %}
+	  </ul>
+	{% endblock %}
+	</body>
+</html>

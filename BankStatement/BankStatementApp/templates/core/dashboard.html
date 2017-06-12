@@ -1,0 +1,93 @@
+<html>
+<title>Dashboard</title>
+<head>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+	{% block content %}
+		<script> 
+			var myData = [];
+			var myData_credit = [];
+		 </script>
+		{% for key,value in debit_dict.items %}
+			<script>
+				myData.push(({{ value }})/500); 
+			</script>
+		{% endfor %}
+
+		{% for key,value in credit_dict.items %}
+			<script>
+				myData_credit.push(({{ value }})/500); 
+			</script>
+		{% endfor %}
+	{% endblock %}
+
+	
+	<div align="center">
+		<p>(LEFT)Debit month wise && Credit month wise(RIGHT)</p>
+		
+	<div id="chart" align="center"></div>
+	<script>
+		console.log(myData);
+		var height = 200;
+		var width = 500;
+		var barWidth = 30;
+		var barOffset = 30;
+
+		var myChart2 = d3.select('#chart').append('svg')
+			.attr('width',width)
+			.attr('height',height)
+			.style('background','#f4f4f4')
+			.selectAll('rect')
+				.data(myData)
+				.enter().append('rect')
+					.style('fill','red')
+					.attr('width',barWidth)
+					.attr('height',function(d){
+						return d;
+					})
+					.attr('x',function(d, i){
+						return i*(barWidth+barOffset);
+					})
+					.attr('y',function(d){
+						return height - d;
+					})
+
+		console.log("done")
+
+	</script>
+</div>
+<div align="right">
+
+	<script>
+		console.log(myData_credit);
+		var height = 200;
+		var width = 500;
+		var barWidth = 30;
+		var barOffset = 30;
+
+		var myChart = d3.select('#chart').append('svg')
+			.attr('width',width)
+			.attr('height',height)
+			.style('background','#f4f4f4')
+			.selectAll('rect')
+				.data(myData_credit)
+				.enter().append('rect')
+					.style('fill','lightgreen')
+					.attr('width',barWidth)
+					.attr('height',function(d){
+						return d;
+					})
+					.attr('x',function(d, i){
+						return i*(barWidth+barOffset);
+					})
+					.attr('y',function(d){
+						return height - d;
+					})
+
+		console.log("done")
+</script>
+</div>
+</body>
+</html>
